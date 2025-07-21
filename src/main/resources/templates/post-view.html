@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${post.title}">Post View</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        color: #333;
+        /* Background image */
+        background: url('https://plus.unsplash.com/premium_photo-1699544857174-1876d6db2ac6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGhpbmclMjBiYWNrZ3JvdW5kfGVufDB8fDB8fHww') no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+    }
+
+    /* optional: add a semi-transparent overlay */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.6);
+        z-index: -1;
+    }
+
+    .main-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 30px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    p {
+        line-height: 1.6;
+        margin: 8px 0;
+    }
+
+    hr {
+        margin: 20px 0;
+        border: none;
+        height: 1px;
+        background: #ddd;
+    }
+
+    .back-link, .button {
+        display: inline-block;
+        margin: 10px 5px 0 0;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        transition: background 0.3s ease;
+    }
+
+    .back-link {
+        background: #3498db;
+    }
+
+    .back-link:hover {
+        background: #2980b9;
+    }
+
+    .button {
+        background: #36ae86;
+    }
+
+    .button:hover {
+        background: #2d8b6e;
+    }
+
+    .post-content {
+        margin-bottom: 24px;
+        color: #444;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+</style>
+</head>
+
+<body>
+<div class="main-container">
+    <h1 th:text="${post.title}">Post Title</h1>
+    <p><strong>Category:</strong> <span th:text="${post.category}">Category</span></p>
+    <p><strong>Tags:</strong> <span th:text="${post.tags}">tags</span></p>
+    <p><strong>Created at:</strong> <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">date</span></p>
+    <p><strong>Updated at:</strong> <span th:text="${#temporals.format(post.updatedAt, 'yyyy-MM-dd HH:mm')}">date</span></p>
+    <hr>
+    <div class="post-content" th:utext="${#strings.escapeXml(post.content).replaceAll('\n','<br/>')}"></div>
+    <a th:href="@{/posts}" class="back-link">← Back to List</a>
+    <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="button">Edit Post</a>
+</div>
+</body>
+</html>
